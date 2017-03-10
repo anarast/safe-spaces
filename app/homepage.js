@@ -1,6 +1,7 @@
 'use strict';
 
 var Map = require('./map');
+var OtherResources = require('./otherResources');
 
 import React, { Component, PropTypes } from 'react'
 import {
@@ -12,18 +13,28 @@ import {
 
 class HomePage extends Component {
 
-  navSecond(){
+  navMap(){
     this.props.navigator.push({
         title: 'Map',
         component: Map
     })
   }
 
+  navResources(){
+    this.props.navigator.push({
+        title: 'Other Resources',
+        component: OtherResources
+    })
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={this.navSecond.bind(this)}>
+        <TouchableHighlight onPress={this.navMap.bind(this)}>
           <Text>Map</Text>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={this.navResources.bind(this)}>
+          <Text>Other Resources</Text>
         </TouchableHighlight>
       </View>
     );

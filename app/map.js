@@ -1,31 +1,15 @@
 'use strict';
 
-import React, { Component, PropTypes } from 'react'
-import {
-  TouchableHighlight,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import React, { Component } from 'react';
+import { MapView, StyleSheet } from 'react-native';
 
 class Map extends Component {
-
-  // static propTypes = {
-  //   title: PropTypes.string.isRequired,
-  //   navigator: PropTypes.object.isRequired,
-  // }
-  //
-  // constructor(props, context) {
-  //   super(props, context);
-  // }
-
   render() {
     return (
-      <View style={styles.container}>
-        <Text>
-          Second screen
-        </Text>
-      </View>
+      <MapView
+        style={{height: 200, margin: 40}}
+        showsUserLocation={true}
+      />
     );
   }
 }
