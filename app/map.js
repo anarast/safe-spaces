@@ -10,22 +10,23 @@ import {
 
 class Map extends Component {
 
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    navigator: PropTypes.object.isRequired,
-  }
-
-  constructor(props, context) {
-    super(props, context);
-  }
+  // static propTypes = {
+  //   title: PropTypes.string.isRequired,
+  //   navigator: PropTypes.object.isRequired,
+  // }
+  //
+  // constructor(props, context) {
+  //   super(props, context);
+  // }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>Current Scene: { this.props.title }</Text>
-        This will be a map
+        <Text>
+          Second screen
+        </Text>
       </View>
-    )
+    );
   }
 }
 

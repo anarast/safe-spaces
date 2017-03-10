@@ -12,37 +12,21 @@ import {
 
 class HomePage extends Component {
 
-  static propTypes = {
-    title: PropTypes.string.isRequired,
-    navigator: PropTypes.object.isRequired,
-  }
-
-  constructor(props, context) {
-    super(props, context);
-    this._onForward = this._onForward.bind(this);
-  }
-
-  _onForward() {
-    // this.props.navigator.push({
-    //   title: 'Map',
-    //   component: Map
-    // });
+  navSecond(){
+    this.props.navigator.push({
+        title: 'Map',
+        component: Map
+    })
   }
 
   render() {
-    // const nextRoute = {
-    //   component: Map,
-    //   title: 'Map',
-    //   passProps: { myProp: 'map' }
-    // };
     return (
       <View style={styles.container}>
-        <Text>{ this.props.title }</Text>
-        <TouchableHighlight onPress={this._onForward()}>
+        <TouchableHighlight onPress={this.navSecond.bind(this)}>
           <Text>Map</Text>
         </TouchableHighlight>
       </View>
-    )
+    );
   }
 }
 

@@ -1,34 +1,5 @@
-'use strict';
+import {AppRegistry} from 'react-native';
 
-var HomePage = require('./homepage');
-
-import React, { Component } from 'react';
-import {
-  AppRegistry,
-  NavigatorIOS,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
-
-class SafeSpaces extends Component {
-
-  render() {
-    return (
-      <NavigatorIOS
-        style={styles.container}
-        initialRoute={{
-          title: 'Safe Spaces',
-          component: HomePage,
-        }}/>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  }
-});
+import SafeSpaces from './app/safespaces';
 
 AppRegistry.registerComponent('SafeSpaces', () => SafeSpaces);
