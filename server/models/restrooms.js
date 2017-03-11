@@ -4,12 +4,12 @@ var Schema       = mongoose.Schema;
 var restroomSchema = new Schema({
   id: {type: Number, ref: 'id', required: true},
   location: {
-    street: {type: String}, // Latitude always goes first!
+    street: String,
     city: String,
     latitude: Number,
     longitude: Number
   },
-  comment: String,
+  comment: [String],
   created_at: Date,
   updated_at: Date,
   down_votes: Number,
