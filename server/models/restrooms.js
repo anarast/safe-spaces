@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose');
 var Schema       = mongoose.Schema;
 
@@ -21,43 +20,12 @@ restroomSchema.statics.getAll = () => {
   return Restroom.find().exec()
 }
 
-var Restroom = mongoose.model('restroom', restroomSchema);
-
-
-// {
-//   get: function(callback) {
-//     return Restroom.find({}).exec().then((data) => console.log(data));
-//   }
-
-
-
-// Restroom.getAll().then(console.log);
-
-// return {
-//   add: function(data, callback) {
-//     var date = new Date();
-//     data.created_at = date.getFullYear() + "-" + date.getMonth() + "-" +
-//       date.getDate();
-//     collection.insert(data, {}, callback || function() {});
-//   },
-//   update: function(data, callback) {
-//     collection.update(
-//       {ID: data.id},
-//       data,
-//       {},
-//       callback || function(){ }
-//     );
-//   },
-//   get: function(callback) {
-//     collection.find({}).toArray(callback);
-//   },
-//   remove: function(id, callback) {
-//     collection.findAndModify(
-//       {ID: id},
-//       [],
-//       {},
-//       {remove: true},
-//       callback
-//     );
-//   }
+// restroomSchema.statics.add = () => {
+//   return Restroom.insert().exec()
 // }
+
+// restroomSchema.statics.update = () => {
+//   return Restroom.update()
+// }
+
+var Restroom = mongoose.model('restroom', restroomSchema);

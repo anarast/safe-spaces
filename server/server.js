@@ -8,8 +8,6 @@ var port     = process.env.PORT || 3000;
 // connect to database
 var mongoose = require('./models');
 
-mongoose.model('restroom').getAll().then(console.log)
-
 // set up express app
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -21,6 +19,7 @@ app.use(function(req, res, next) {
 
 // routes
 app.get('/api/getRestrooms', require("./api/getRestrooms"));
+app.post('/api/addRestroom', require("./api/addRestroom"));
 app.post('/api/deleteRestroom', require("./api/deleteRestroom"));
 app.post('/api/updateRestroom', require("./api/deleteRestroom"));
 
