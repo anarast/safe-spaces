@@ -40,6 +40,8 @@ class Map extends Component {
         style={styles.map}
         region={this.state.mapRegion}
         annotations={markers}
+        showsUserLocation={true}
+        followUserLocation={true}
       />
     );
   }
