@@ -6,7 +6,7 @@ var bodyParser = require('body-parser')
 var port     = process.env.PORT || 3000;
 
 // connect to database
-
+var restrooms = require("./models/restrooms")();
 
 // set up express app
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,6 +17,7 @@ var router = express.Router();
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });
 });
+
 app.use('/api', router);
 
 // launch
