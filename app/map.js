@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { MapView, StyleSheet, Dimensions, Geolocation } from 'react-native';
+import { MapView, StyleSheet, Dimensions, Geolocation, TouchableOpacity, Alert, Image } from 'react-native';
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -17,7 +17,19 @@ var markers = [
     latitude: LATITUDE,
     longitude: LONGITUDE,
     title: 'Foo Place',
-    subtitle: '1234 Foo Drive'
+    subtitle: '73% liked', // if only a few ratings say 2 in 3 liked
+    tintColor: 'green',
+    rightCalloutView: (
+      <TouchableOpacity
+        onPress={() => {
+          alert('You Are Here');
+        }}>
+        <Image
+          style={{width:30, height:30}}
+          source={require('./ic_timer_3x.png')}
+        />
+      </TouchableOpacity>
+    ),
   }
 ];
 
@@ -32,6 +44,11 @@ class Map extends Component {
         longitudeDelta: LONGITUDE_DELTA,
       },
     }
+  }
+
+  // Fetch markers and build out the markers objects
+  getMarkers() {
+    // fetch()
   }
 
   render() {
