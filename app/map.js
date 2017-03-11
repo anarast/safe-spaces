@@ -12,7 +12,7 @@ const LONGITUDE = -123.120738;
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-var localIp = '206.12.41.49';
+var localIp = '128.189.71.100';
 
 var RESPONSE = [
   {
