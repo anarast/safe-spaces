@@ -85,7 +85,7 @@ class Map extends Component {
             }}>
             <Image
               style={{width:30, height:30}}
-              source={require('../img/Right-100.png')}
+              source={require('../img/ic_chevron_right_36pt_3x.png')}
             />
           </TouchableOpacity>
         ),
