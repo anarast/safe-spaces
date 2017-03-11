@@ -45,39 +45,39 @@ class OtherResources extends Component {
       <View style={styles.container}>
           <View style={styles.list}>
             <TouchableHighlight onPress={this.navYouth.bind(this)}
-                                underlayColor={'white'}
+                                underlayColor={'transparent'}
                                 activeOpacity={0.5}>
               <View>
                 <Image
                   source={require('./images/teenagers.jpeg')}
                   style={{width: deviceWidth, height: deviceHeight/3, resizeMode: 'cover'}}>
-                    <Text style={{fontSize: 32, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:80, marginBottom: 40}}>
+                    <Text style={{fontSize: 35, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:80, marginBottom: 40}}>
                       YOUTH
                     </Text>
                   </Image>
               </View>
             </TouchableHighlight>
             <TouchableHighlight onPress={this.navFamily.bind(this)}
-                                underlayColor={'white'}
+                                underlayColor={'transparent'}
                                 activeOpacity={0.5}>
               <View>
                 <Image
-                  source={require('./images/adults.jpeg')}
+                  source={require('./images/family.jpeg')}
                   style={{width: deviceWidth, height: deviceHeight/3, resizeMode: 'cover'}}>
-                  <Text style={{fontSize: 32, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:80, marginBottom: 40}}>
+                  <Text style={{fontSize: 35, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:80, marginBottom: 40}}>
                     FAMILY
                   </Text>
                 </Image>
               </View>
             </TouchableHighlight>
             <TouchableHighlight onPress={this.navImmigrantsRefugees.bind(this)}
-                                underlayColor={'white'}
+                                underlayColor={'transparent'}
                                 activeOpacity={0.5}>
               <View>
                 <Image
                   source={require('./images/refugees.jpg')}
                   style={{width: deviceWidth, height: deviceHeight/3, resizeMode: 'cover'}}>
-                  <Text style={{fontSize: 32, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:80, marginBottom: 40}}>
+                  <Text style={{fontSize: 35, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:80, marginBottom: 40}}>
                     REFUGEES
                   </Text>
                 </Image>
@@ -91,14 +91,15 @@ class OtherResources extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 30,
-    marginTop: 65,
+    //padding: 30,
+    marginTop: 90,
     alignItems: 'center',
     flex: 1
   },
   list: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
   listitem: {
     fontSize: 20,
