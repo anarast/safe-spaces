@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   list: {
-    alignItems: 'center',
+    flex: 1,
+    flexDirection: 'row'
   },
   listitem: {
     fontSize: 20,

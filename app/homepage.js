@@ -30,11 +30,15 @@ class HomePage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableHighlight onPress={this.navMap.bind(this)}>
-          <Text>Map</Text>
+        <TouchableHighlight onPress={this.navMap.bind(this)}
+                            underlayColor={'white'}
+                            activeOpacity={0.5}>
+          <Text style={styles.description}>Map</Text>
         </TouchableHighlight>
-        <TouchableHighlight onPress={this.navResources.bind(this)}>
-          <Text>Other Resources</Text>
+        <TouchableHighlight onPress={this.navResources.bind(this)}
+                            underlayColor={'white'}
+                            activeOpacity={0.5}>
+          <Text style={styles.description}>Other Resources</Text>
         </TouchableHighlight>
       </View>
     );
@@ -44,7 +48,7 @@ class HomePage extends Component {
 const styles = StyleSheet.create({
   description: {
     marginBottom: 20,
-    fontSize: 18,
+    fontSize: 28,
     textAlign: 'center',
     color: '#656565'
   },
