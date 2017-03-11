@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { MapView, StyleSheet, Dimensions, Geolocation, TouchableOpacity, Alert, Image } from 'react-native';
+import { View, Modal, Text, TouchableHighlight, MapView, StyleSheet, Dimensions, Geolocation, TouchableOpacity, Alert, Image } from 'react-native';
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -52,11 +52,16 @@ class Map extends Component {
         longitudeDelta: LONGITUDE_DELTA,
       },
       markers: null,
+      modalVisible: false,
     }
   }
 
   componentWillMount() {
     this.getRestrooms();
+  }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   }
 
   // Fetch markers and build out the markers objects
@@ -81,7 +86,7 @@ class Map extends Component {
         rightCalloutView: (
           <TouchableOpacity
             onPress={() => {
-              alert('Great Choice');
+              this.setModalVisible(true);
             }}>
             <Image
               style={{width:30, height:30}}
@@ -97,18 +102,54 @@ class Map extends Component {
 
   render() {
     return (
-      <MapView
-        style={styles.map}
-        region={this.state.mapRegion}
-        annotations={this.state.markers}
-        showsUserLocation={true}
-        followUserLocation={true}
-      />
+      <View style={styles.container}>
+        <MapView
+          style={styles.map}
+          region={this.state.mapRegion}
+          annotations={this.state.markers}
+          showsUserLocation={true}
+          followUserLocation={true}
+        />
+        <Modal
+          animationType={"fade"}
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {alert("Modal has been closed.")}}
+          transparent={true}
+          >
+          <View style={{
+           flex: 1,
+           flexDirection: 'column',
+           justifyContent: 'center',
+           alignItems: 'center',
+           backgroundColor: 'rgba(0, 0, 0, 0.5)'
+         }}>
+           <View style={{
+              width: 300,
+              height: 500,
+              justifyContent: 'flex-start',
+              alignItems: 'stretch',
+              backgroundColor: 'white',
+            }}>
+              <Text>Hello World!</Text>
+
+              <TouchableHighlight onPress={() => {
+                this.setModalVisible(!this.state.modalVisible)
+              }}>
+                <Text>Hide Modal</Text>
+              </TouchableHighlight>
+            </View>
+         </View>
+        </Modal>
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   description: {
     marginBottom: 20,
     fontSize: 18,
