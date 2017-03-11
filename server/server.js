@@ -6,19 +6,23 @@ var bodyParser = require('body-parser')
 var port     = process.env.PORT || 3000;
 
 // connect to database
-var restrooms = require("./models/restrooms")();
+var mongoose = require('./models');
+
+mongoose.model('restroom').getAll().then(console.log)
 
 // set up express app
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// routes
-var router = express.Router();
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
+app.use(function(req, res, next) {
+  req.models = mongoose.model.bind(mongoose)
+  next();
 });
 
-app.use('/api', router);
+// routes
+app.get('/api/getRestrooms', require("./api/getRestrooms"));
+app.post('/api/deleteRestroom', require("./api/deleteRestroom"));
+app.post('/api/updateRestroom', require("./api/deleteRestroom"));
 
 // launch
 app.listen(port);
