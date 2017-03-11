@@ -6,8 +6,7 @@ import { MapView, StyleSheet } from 'react-native';
 class Map extends Component {
   render() {
     return (
-      <MapView
-        style={{height: 200, margin: 40}}
+      <MapView style={styles.container}
         showsUserLocation={true}
       />
     );
@@ -22,9 +21,7 @@ const styles = StyleSheet.create({
     color: '#656565'
   },
   container: {
-    padding: 30,
-    marginTop: 65,
-    alignItems: 'center'
+    flex: 1
   }
 });
 
