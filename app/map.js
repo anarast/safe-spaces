@@ -12,6 +12,8 @@ const LONGITUDE = -123.120738;
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
+var localIp = '206.12.41.49';
+
 var RESPONSE = [
   {
     street: 'Granville',
@@ -66,8 +68,15 @@ class Map extends Component {
 
   // Fetch markers and build out the markers objects
   getRestrooms() {
-    // fetch()
-    this.plotRestrooms(RESPONSE);
+    return fetch('http://' + localIp + ':3000/api/getRestrooms')
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log(responseJson);
+        this.plotRestrooms(responseJson);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   plotRestrooms(response) {
