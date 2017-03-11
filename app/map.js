@@ -12,51 +12,95 @@ const LONGITUDE = -123.120738;
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
-var markers = [
+var RESPONSE = [
   {
+    street: 'Granville',
+    city: 'Vancouver',
+    province: 'BC',
+    country: 'Canada',
+    comments: ['What a relief!', 'Kinda crappy!'],
+    upvotes: 5,
+    downvotes: 6,
     latitude: LATITUDE,
     longitude: LONGITUDE,
-    title: 'Foo Place',
-    subtitle: '73% liked', // if only a few ratings say 2 in 3 liked
-    tintColor: 'green',
-    rightCalloutView: (
-      <TouchableOpacity
-        onPress={() => {
-          alert('You Are Here');
-        }}>
-        <Image
-          style={{width:30, height:30}}
-          source={require('./ic_timer_3x.png')}
-        />
-      </TouchableOpacity>
-    ),
-  }
-];
+    created_at: new Date(),
+    updated_at: new Date(),
+  },
+  {
+    street: 'Burrard',
+    city: 'Vancouver',
+    province: 'BC',
+    country: 'Canada',
+    comments: ['Got there just in time!', 'Smells fresh!'],
+    upvotes: 10,
+    downvotes: 2,
+    latitude: LATITUDE + 0.002,
+    longitude: LONGITUDE + 0.002,
+    created_at: new Date(),
+    updated_at: new Date(),
+  },
+]
 
 class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
       mapRegion: {
-        latitude: LATITUDE,
-        longitude: LONGITUDE,
+        latitude: 49.282799,
+        longitude: -123.120768,
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       },
+      markers: null,
     }
   }
 
-  // Fetch markers and build out the markers objects
-  getMarkers() {
-    // fetch()
+  componentWillMount() {
+    this.getRestrooms();
   }
+
+  // Fetch markers and build out the markers objects
+  getRestrooms() {
+    // fetch()
+    this.plotRestrooms(RESPONSE);
+  }
+
+  plotRestrooms(response) {
+    var markers = [];
+    console.log(response);
+    for (var i = 0; i < response.length; i++) {
+      console.log(response[i].street);
+      let totalVotes = response[i].upvotes + response[i].downvotes;
+      let percLiked = Math.round((response[i].upvotes / totalVotes) * 100);
+      markers.push({
+        latitude: response[i].latitude,
+        longitude: response[i].longitude,
+        title: response[i].street,
+        subtitle: percLiked + "% liked", // if only a few ratings say 2 in 3 liked
+        tintColor: (percLiked > 50 ? 'green' : 'red'),
+        rightCalloutView: (
+          <TouchableOpacity
+            onPress={() => {
+              alert('Great Choice');
+            }}>
+            <Image
+              style={{width:30, height:30}}
+              source={require('../img/Right-100.png')}
+            />
+          </TouchableOpacity>
+        ),
+      })
+    }
+    this.setState({markers: markers});
+  }
+
 
   render() {
     return (
       <MapView
         style={styles.map}
         region={this.state.mapRegion}
-        annotations={markers}
+        annotations={this.state.markers}
         showsUserLocation={true}
         followUserLocation={true}
       />
