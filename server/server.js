@@ -3,10 +3,13 @@ var express = require('express');
 var app = express();
 var session = require('express-session');
 var bodyParser = require('body-parser')
+
+// port number
 var port     = process.env.PORT || 3000;
 
 // connect to database
 var mongoose = require('./models');
+mongoose.Promise = global.Promise;
 
 // set up express app
 app.use(bodyParser.urlencoded({ extended: true }));
