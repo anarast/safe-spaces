@@ -1,5 +1,5 @@
 module.exports = function(req, res, next) {
-  req.articles.updateRestroom(req.body, function() {
+  req.models('restroom').updateRestroom(req.body, function() {
     res.send({success: true});
   });
 }
