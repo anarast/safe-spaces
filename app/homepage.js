@@ -21,7 +21,7 @@ class HomePage extends Component {
   navMap(){
     this.props.navigator.push({
         title: 'Map',
-        component: Map
+        component: Map,
     })
   }
 
@@ -43,7 +43,7 @@ class HomePage extends Component {
                 <Image
                   source={require('./images/bathroom.jpeg')}
                   style={{width: deviceWidth, height: deviceHeight*(4/6), resizeMode: 'cover'}}>
-                    <Text style={{fontSize: 35, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:125, marginBottom: 40}}>
+                    <Text style={{fontSize: 35, color: 'white', fontWeight: 'bold', textAlign:'center', marginTop:190, marginBottom: 40}}>
                       FIND ME A RESTROOM!
                     </Text>
                   </Image>
