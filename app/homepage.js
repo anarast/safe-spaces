@@ -21,7 +21,7 @@ class HomePage extends Component {
   navMap(){
     this.props.navigator.push({
         title: 'Map',
-        component: Map
+        component: Map,
     })
   }
 

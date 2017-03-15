@@ -36,6 +36,7 @@ class Map extends Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       },
+      userPosition: null,
       restrooms: null,
       addingRestroom: false,
       newRestroomCoordinate: null,
@@ -47,14 +48,55 @@ class Map extends Component {
     getRestrooms(this);
   }
 
+  // Center on the user's current position
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.setState(
+          {userPosition: position.coords},
+          () => this.centerOnUser(),
+        );
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+    this.watchID = navigator.geolocation.watchPosition(
+      (position) => {
+        this.setState(
+          {userPosition: position.coords},
+          () => this.centerOnUser(),
+        );
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+  }
+
+  // Clear the listener for the user's current position
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  centerOnUser() {
+    this.setState({
+      region: {
+        latitude: this.state.userPosition.latitude,
+        longitude: this.state.userPosition.longitude,
+        latitudeDelta: LATITUDE_DELTA,
+        longitudeDelta: LONGITUDE_DELTA,
+      },
+    });
+    console.log('centered');
+  }
+
   onRegionChange(region) {
     this.setState({ region });
   }
 
   addRestroom() {
     this.setState({
-      addingRestroom: true,
-      newRestroomCoordinate: this.state.region,
+      addingRestroom: !this.state.addingRestroom,
+      newRestroomCoordinate: (this.state.addingRestroom ? null : this.state.region),
     });
   }
 
@@ -123,6 +165,14 @@ class Map extends Component {
           onPress={()=> this.addRestroom()}
           activeOpacity={.8}>
           <Text style={styles.buttonText}>Add a restroom</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={()=> {
+            console.log('centered');
+            this.centerOnUser()
+          }}
+          activeOpacity={.8}>
+          <Text style={styles.buttonText}>Center</Text>
         </TouchableOpacity>
       </View>
     );
