@@ -13,7 +13,8 @@ import {
   Alert,
   Image,
 } from 'react-native';
-var MapView = require('react-native-maps');
+import RestroomProfile from './RestroomProfile';
+import MapView from 'react-native-maps';
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -102,6 +103,9 @@ class Map extends Component {
         latlng: {latitude: response[i].latitude, longitude: response[i].longitude},
         title: response[i].street,
         description: percLiked + "% liked", // if only a few ratings say 2 in 3 liked
+        upvotes: response[i].upvotes,
+        downvotes: response[i].downvotes,
+        comments: response[i].comments,
         tintColor: (percLiked > 50 ? 'green' : 'red'),
       });
     }
@@ -125,7 +129,14 @@ class Map extends Component {
               coordinate={marker.latlng}
               title={marker.title}
               description={marker.description}
-            />
+              pinColor={marker.tintColor}
+            >
+              <MapView.Callout>
+                <RestroomProfile
+                  marker={marker}
+                />
+              </MapView.Callout>
+            </MapView.Marker>
           ))}
         </MapView>
       </View>
