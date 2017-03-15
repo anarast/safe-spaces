@@ -1,7 +1,19 @@
 'use strict';
 
 import React, { Component } from 'react';
-import { View, Modal, Text, TouchableHighlight, MapView, StyleSheet, Dimensions, Geolocation, TouchableOpacity, Alert, Image } from 'react-native';
+import {
+  View,
+  Modal,
+  Text,
+  TouchableHighlight,
+  StyleSheet,
+  Dimensions,
+  Geolocation,
+  TouchableOpacity,
+  Alert,
+  Image,
+} from 'react-native';
+var MapView = require('react-native-maps');
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -87,69 +99,34 @@ class Map extends Component {
       let totalVotes = response[i].upvotes + response[i].downvotes;
       let percLiked = Math.round((response[i].upvotes / totalVotes) * 100);
       markers.push({
-        latitude: response[i].latitude,
-        longitude: response[i].longitude,
+        latlng: {latitude: response[i].latitude, longitude: response[i].longitude},
         title: response[i].street,
-        subtitle: percLiked + "% liked", // if only a few ratings say 2 in 3 liked
+        description: percLiked + "% liked", // if only a few ratings say 2 in 3 liked
         tintColor: (percLiked > 50 ? 'green' : 'red'),
-        rightCalloutView: (
-          <TouchableOpacity
-            onPress={() => {
-              this.setModalVisible(true);
-            }}>
-            <Image
-              style={{width:30, height:30}}
-              source={require('../img/ic_chevron_right_36pt_3x.png')}
-            />
-          </TouchableOpacity>
-        ),
-      })
+      });
     }
     this.setState({markers: markers});
   }
 
-
   render() {
+    if (this.state.markers == null)
+      return null;
     return (
       <View style={styles.container}>
         <MapView
           style={styles.map}
           region={this.state.mapRegion}
-          annotations={this.state.markers}
-          showsUserLocation={true}
-          followUserLocation={true}
-        />
-        <Modal
-          animationType={"fade"}
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {alert("Modal has been closed.")}}
-          transparent={true}
-          >
-          <View style={{
-           flex: 1,
-           flexDirection: 'column',
-           justifyContent: 'center',
-           alignItems: 'center',
-           backgroundColor: 'rgba(0, 0, 0, 0.5)'
-         }}>
-           <View style={{
-              width: 300,
-              height: 500,
-              justifyContent: 'flex-start',
-              alignItems: 'stretch',
-              backgroundColor: 'white',
-            }}>
-              <Text>Hello World!</Text>
-
-              <TouchableHighlight onPress={() => {
-                this.setModalVisible(!this.state.modalVisible)
-              }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
-            </View>
-         </View>
-        </Modal>
+          onRegionChange={this.onRegionChange}
+        >
+          {this.state.markers.map((marker, i) => (
+            <MapView.Marker
+              key={i}
+              coordinate={marker.latlng}
+              title={marker.title}
+              description={marker.description}
+            />
+          ))}
+        </MapView>
       </View>
     );
   }
