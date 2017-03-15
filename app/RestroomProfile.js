@@ -10,13 +10,14 @@ import {
 
 export default class RestroomProfile extends Component {
   render() {
+    let rr = this.props.restroom;
     return(
       <View>
         <Text style={styles.title}>
-          {this.props.marker.title}
+          {rr.street}
         </Text>
         <Text style={styles.likePerc}>
-          {this.props.marker.description}
+          {Math.round(rr.upvotes/(rr.downvotes+rr.upvotes)*100)}% liked
         </Text>
         <View style={styles.voteContainer}>
           <Image
@@ -24,18 +25,18 @@ export default class RestroomProfile extends Component {
             source={require('../img/ic_thumb_up_3x.png')}
           />
           <Text style={styles.voteText}>
-            {this.props.marker.upvotes}
+            {rr.upvotes}
           </Text>
           <Image
             style={{width: 12, height: 12}}
             source={require('../img/ic_thumb_down_3x.png')}
           />
           <Text style={styles.voteText}>
-            {this.props.marker.downvotes}
+            {rr.downvotes}
           </Text>
         </View>
         <Text style={styles.commentsCount}>
-          {this.props.marker.comments.length} comments
+          {rr.comments.length} comments
         </Text>
       </View>
     );

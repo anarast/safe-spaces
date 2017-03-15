@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import RestroomProfile from './RestroomProfile';
 import MapView from 'react-native-maps';
+import { getRestrooms } from './scripts/apiCalls'
 
 var { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -24,37 +25,6 @@ const LATITUDE = 49.282729;
 const LONGITUDE = -123.120738;
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
-var localIp = '192.168.1.94';
-
-var RESPONSE = [
-  {
-    street: 'Granville',
-    city: 'Vancouver',
-    province: 'BC',
-    country: 'Canada',
-    comments: ['What a relief!', 'Kinda crappy!'],
-    upvotes: 5,
-    downvotes: 6,
-    latitude: LATITUDE,
-    longitude: LONGITUDE,
-    created_at: new Date(),
-    updated_at: new Date(),
-  },
-  {
-    street: 'Burrard',
-    city: 'Vancouver',
-    province: 'BC',
-    country: 'Canada',
-    comments: ['Got there just in time!', 'Smells fresh!'],
-    upvotes: 10,
-    downvotes: 2,
-    latitude: LATITUDE + 0.002,
-    longitude: LONGITUDE + 0.002,
-    created_at: new Date(),
-    updated_at: new Date(),
-  },
-]
 
 class Map extends Component {
   constructor(props) {
@@ -66,76 +36,48 @@ class Map extends Component {
         latitudeDelta: LATITUDE_DELTA,
         longitudeDelta: LONGITUDE_DELTA,
       },
-      markers: null,
-      modalVisible: false,
+      restrooms: null,
     }
   }
 
   componentWillMount() {
-    this.getRestrooms();
-  }
-
-  setModalVisible(visible) {
-    this.setState({modalVisible: visible});
-  }
-
-  // Fetch markers and build out the markers objects
-  getRestrooms() {
-    return fetch('http://' + localIp + ':3000/api/getRestrooms')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log(responseJson);
-        this.plotRestrooms(responseJson);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
-  plotRestrooms(response) {
-    var markers = [];
-    console.log(response);
-    for (var i = 0; i < response.length; i++) {
-      console.log(response[i].street);
-      let totalVotes = response[i].upvotes + response[i].downvotes;
-      let percLiked = Math.round((response[i].upvotes / totalVotes) * 100);
-      markers.push({
-        latlng: {latitude: response[i].latitude, longitude: response[i].longitude},
-        title: response[i].street,
-        description: percLiked + "% liked", // if only a few ratings say 2 in 3 liked
-        upvotes: response[i].upvotes,
-        downvotes: response[i].downvotes,
-        comments: response[i].comments,
-        tintColor: (percLiked > 50 ? 'green' : 'red'),
-      });
-    }
-    this.setState({markers: markers});
+    getRestrooms(this);
   }
 
   render() {
-    if (this.state.markers == null)
+    if (this.state.restrooms == null)
       return null;
     return (
       <View style={styles.container}>
+
+        {/* Map that shows user location */}
         <MapView
           style={styles.map}
           region={this.state.mapRegion}
           onRegionChange={this.onRegionChange}
           showsUserLocation={true}
         >
-          {this.state.markers.map((marker, i) => (
+
+          {/* Markers showing restrooms on the map */}
+          {this.state.restrooms.map((restroom, i) => (
             <MapView.Marker
               key={i}
-              coordinate={marker.latlng}
-              title={marker.title}
-              description={marker.description}
-              pinColor={marker.tintColor}
+              coordinate={{
+                latitude: restroom.latitude,
+                longitude: restroom.longitude
+              }}
+              title={restroom.title}
+              description={restroom.description}
+              pinColor={(restroom.upvotes/(restroom.downvotes+restroom.upvotes) > .5 ? 'green' : 'red')}
             >
+
+              {/* Custom callout for markers showing restroom info */}
               <MapView.Callout>
                 <RestroomProfile
-                  marker={marker}
+                  restroom={restroom}
                 />
               </MapView.Callout>
+
             </MapView.Marker>
           ))}
         </MapView>
