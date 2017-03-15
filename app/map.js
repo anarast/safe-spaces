@@ -117,6 +117,7 @@ class Map extends Component {
           style={styles.map}
           region={this.state.mapRegion}
           onRegionChange={this.onRegionChange}
+          showsUserLocation={true}
         >
           {this.state.markers.map((marker, i) => (
             <MapView.Marker
