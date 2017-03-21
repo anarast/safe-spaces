@@ -14,8 +14,4 @@ var restroomSchema = new Schema({
   upvotes: Number,
 })
 
-restroomSchema.statics.getRestrooms = () => {
-  return Restroom.find().exec();
-}
-
-var Restroom = mongoose.model('restroom', restroomSchema);
+module.exports = mongoose.model('restroom', restroomSchema)

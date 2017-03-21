@@ -1,31 +1,39 @@
-// module dependencies
+// Module dependencies
 var express = require('express');
-var app = express();
 var session = require('express-session');
 var bodyParser = require('body-parser')
 
-// port number
-var port     = process.env.PORT || 3000;
-
-// connect to database
-var mongoose = require('./models');
-mongoose.Promise = global.Promise;
-
-// set up express app
+// express app
+var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(function(req, res, next) {
-  req.models = mongoose.model.bind(mongoose)
-  next();
+// Port number
+var port     = process.env.PORT || 3000;
+
+// Connect to database
+var mongoose   = require('mongoose');
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/restroom_db');
+
+// Routes
+var router = express.Router();
+
+// Test route
+router.get('/', function(req, res) {
+    res.json({ message: 'hello sara' });
 });
 
-// routes
-app.get('/api/getRestrooms', require("./api/getRestrooms"));
-app.post('/api/addRestroom', require("./api/addRestroom"));
-app.post('/api/deleteRestroom', require("./api/deleteRestroom"));
-app.post('/api/updateRestroom', require("./api/deleteRestroom"));
+// Routes
+router.post('/restrooms', require('./api/addRestroom'));
+router.get('/restrooms', require('./api/getRestrooms'));
+router.get('/restrooms/:id', require('./api/getRestroomById'));
+router.put('/restrooms/:id', require('./api/updateRestroom'));
+router.delete('/restrooms/:id', require('./api/deleteRestroom'));
 
-// launch
+// Register routes
+app.use('/api', router);
+
+// Launch
 app.listen(port);
 console.log('Listening on port: ' + port);
