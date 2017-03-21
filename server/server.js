@@ -16,7 +16,7 @@ var mongoose   = require('mongoose');
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/restroom_db');
 
-// Routes
+// Express router
 var router = express.Router();
 
 // Test route

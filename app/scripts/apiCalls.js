@@ -31,7 +31,7 @@ var localIp = '192.168.1.94';
 //   },
 // ]
 export function getRestrooms(comp) {
-  return fetch('http://' + localIp + ':3000/api/getRestrooms')
+  return fetch('http://' + localIp + ':3000/api/restrooms')
     .then((response) => response.json())
     .then((responseJson) => {
       comp.setState({restrooms: responseJson});
